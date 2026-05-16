@@ -6,6 +6,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
+const chatRoutes = require('./routes/chat.routes');
+const { setupSocket } = require('./socket/socket');
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -24,11 +27,16 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Test route
 app.get('/', (req, res) => {
   res.json({ message: 'Server is running!' });
 });
+
+// Socket setup
+setupSocket(io);
 
 // MongoDB connection
 mongoose
