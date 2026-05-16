@@ -25,6 +25,7 @@ const register = async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (error) {
+    console.error('Register error:', error.message);
     res.status(500).json({ message: error.message });
   }
 };
